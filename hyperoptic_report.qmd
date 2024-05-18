@@ -4,11 +4,11 @@ project:
   type: website
 ---
 
-The past week or so has been full of troubleshooting wifi speed problems. Various changes suggested by the Hyperoptic team has not succeeded in bringing my internet speed close to the speed of 1 Gbps prmised in the package I chose. 
+The past week or so has been full of troubleshooting wifi speed problems. Various changes suggested by the Hyperoptic team has not succeeded in bringing my internet speed close to the speed of 1 Gbps promised in the package I chose. 
 
 Most recent suggestion was that I try doing the speedtest on different devices. Perhaps the experts at hyperoptic are baffled their suggestions of trying a different cable or resetting the router are not working. The trouble must be with my device! So this is what I did. 
 
-However, I wondered, how will they know if the difference in speed between different devices is significant? Worry not, Hyperoptic. I was trained in statistics, and my passion for `R` can help us both. 
+However, I wondered, how will they know if the difference in speed between different devices is significant? Worry not, Hyperoptic, I was trained in statistics, and my passion for `R` can help us both. 
 
 You are welcome. 
 
