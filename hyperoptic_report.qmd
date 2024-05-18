@@ -76,7 +76,8 @@ ggplot(data = data_melted) +
   geom_boxplot(aes(x = device, y = value, fill = variable)) +
   xlab("device") +
   ylab("speed (Mbps)") +
-  labs(fill = "speed measured")
+  labs(fill = "speed measured") + 
+  scale_fill_manual(values = c("lightblue1", "thistle2"))
 ```
 
 ## Test the normality of data

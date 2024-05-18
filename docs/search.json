@@ -4,7 +4,7 @@
     "href": "hyperoptic_report.html",
     "title": "Hyperoptic internet speed",
     "section": "",
-    "text": "The past week or so has been full of troubleshooting wifi speed problems. Various changes suggested by the Hyperoptic team has not succeeded in bringing my internet speed close to the speed of 1 Gbps prmised in the package I chose.\nMost recent suggestion was that I try doing the speedtest on different devices. Perhaps the experts at hyperoptic are baffled their suggestions of trying a different cable or resetting the router are not working. The trouble must be with my device! So this is what I did.\nHowever, I wondered, how will they know if the difference in speed between different devices is significant? Worry not, Hyperoptic. I was trained in statistics, and my passion for R can help us both.\nYou are welcome."
+    "text": "The past week or so has been full of troubleshooting wifi speed problems. Various changes suggested by the Hyperoptic team has not succeeded in bringing my internet speed close to the speed of 1 Gbps promised in the package I chose.\nMost recent suggestion was that I try doing the speedtest on different devices. Perhaps the experts at hyperoptic are baffled their suggestions of trying a different cable or resetting the router are not working. The trouble must be with my device! So this is what I did.\nHowever, I wondered, how will they know if the difference in speed between different devices is significant? Worry not, Hyperoptic, I was trained in statistics, and my passion for R can help us both.\nYou are welcome."
   },
   {
     "objectID": "hyperoptic_report.html#create-a-summary-of-data",
@@ -18,7 +18,7 @@
     "href": "hyperoptic_report.html#visualise-data",
     "title": "Hyperoptic internet speed",
     "section": "Visualise data",
-    "text": "Visualise data\n@boxplot is a visualisation of the values summarised above.\n\ndata_melted &lt;- melt(data, id = \"device\")\n\nggplot(data = data_melted) +\n  geom_boxplot(aes(x = device, y = value, fill = variable)) +\n  xlab(\"device\") +\n  ylab(\"speed (Mbps)\") +\n  labs(fill = \"speed measured\")\n\n\n\n\nBoxplot of download and upload values per device"
+    "text": "Visualise data\n@boxplot is a visualisation of the values summarised above.\n\ndata_melted &lt;- melt(data, id = \"device\")\n\nggplot(data = data_melted) +\n  geom_boxplot(aes(x = device, y = value, fill = variable)) +\n  xlab(\"device\") +\n  ylab(\"speed (Mbps)\") +\n  labs(fill = \"speed measured\") + \n  scale_fill_manual(values = c(\"lightblue1\", \"thistle2\"))\n\n\n\n\nBoxplot of download and upload values per device"
   },
   {
     "objectID": "hyperoptic_report.html#test-the-normality-of-data",
