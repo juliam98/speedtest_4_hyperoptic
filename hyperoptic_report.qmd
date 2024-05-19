@@ -35,6 +35,12 @@ data$Upload <- as.numeric(data$Upload) / 1000
 data$device <- as.factor(data$device)
 ```
 
+## About the data
+
+The data used for this report were collected between 17/05/2024 19:00 and 18/05/2024 01:00. All deviced were connected to the 5 Ghz band. I have not tested the speed on the 2.4 Ghz band.
+
+The variable `device` in the dataset refers to one of three devices available to me at the time of testing: personal laptop, phone, and work laptop. I was not able to conduct the speedtest on my TV because despite being connected to wifi it shows the 'no internet' error message. 
+
 ## Create a summary of data
 
 ```{r}
@@ -53,13 +59,13 @@ print(summary)
 
 The average speed per device are:
 
-|  | download | upload |
+|  | download (± SD) Mbps | upload (± SD) Mbps |
 |---|---|---|
-| personal laptop | `{r} print(round(summary$mean_download[1], 0))` Mbps ±`{r} print(round(summary$sd_download[1], 1))` | `{r} print(round(summary$mean_upload[1], 0))` Mbps ± `{r} print(round(summary$sd_upload[1], 0))` |
-| phone | `{r} print(round(summary$mean_download[2], 0))` Mbps ±`{r} print(round(summary$sd_download[2], 1))` | `{r} print(round(summary$mean_upload[2], 0))` Mbps ± `{r} print(round(summary$sd_upload[2], 0))` |
-| work laptop | `{r} print(round(summary$mean_download[1], 0))` Mbps ±`{r} print(round(summary$sd_download[3], 1))` | `{r} print(round(summary$mean_upload[3], 0))` Mbps ±`{r} print(round(summary$sd_upload[3], 0))` |
+| personal laptop | `{r} print(round(summary$mean_download[1], 0))` (±`{r} print(round(summary$sd_download[1], 1))`) | `{r} print(round(summary$mean_upload[1], 0))` (± `{r} print(round(summary$sd_upload[1], 0))`) |
+| phone | `{r} print(round(summary$mean_download[2], 0))` (±`{r} print(round(summary$sd_download[2], 1))`) | `{r} print(round(summary$mean_upload[2], 0))`  (± `{r} print(round(summary$sd_upload[2], 0))`) |
+| work laptop | `{r} print(round(summary$mean_download[1], 0))` (±`{r} print(round(summary$sd_download[3], 1))`) | `{r} print(round(summary$mean_upload[3], 0))`  (±`{r} print(round(summary$sd_upload[3], 0))`) |
 
-Averages are calculated for 10 measurements per device. Standar deviation values are denoted by ±. 
+Averages are calculated for 10 measurements per device. Standard deviation values are denoted by ±. 
 
 ## Visualise data
 
@@ -78,6 +84,7 @@ ggplot(data = data_melted) +
   ylab("speed (Mbps)") +
   labs(fill = "speed measured") + 
   scale_fill_manual(values = c("lightblue1", "thistle2"))
+
 ```
 
 ## Test the normality of data
@@ -94,7 +101,7 @@ normal_download <- shapiro.test(res_download$residuals)
 print(normal_download)
 ```
 
-The p-value of Shapiro test is `{r} print(round(normal_download$p.value, 3))`, meaning the data is normally distributed.
+The p-value of Shapiro test is `{r} print(round(normal_download$p.value, 5))`, meaning the data is **not** normally distributed.
 
 ### Upload speed:
 
@@ -107,7 +114,7 @@ normal_upload <- shapiro.test(res_upload$residuals)
 print(normal_upload)
 ```
 
-The p-value of Shapiro test is `{r} print(round(normal_upload$p.value, 3))`, meaning the data is normally distributed.
+The p-value of Shapiro test is `{r} print(round(normal_upload$p.value, 5))`, meaning the data is normally distributed.
 
 ## Check homoscedascidity of data
 Conduct Levene's test to check for homoscedascidity of data.
@@ -122,7 +129,7 @@ homoscedasticity_d <- leveneTest(Download ~ factor(device),
 print(homoscedasticity_d)
 ```
 
-Levene's test is significant, meaning variances of download speed data across different devices are not equal.
+Levene's test is significant, meaning variances of download speed data across different devices are **not equal**.
 
 ### Upload speed:
 ```{r}
@@ -132,18 +139,18 @@ homoscedasticity_u <- leveneTest(Upload ~ factor(device),
 print(homoscedasticity_u)
 ```
 
-Levene's test is significant, meaning our data is heteroscedastic (i.e. variances of upload speed data across different devices are not equal).
+Levene's test is non significant, meaning our data is homoscedastic (i.e. variances of upload speed data across different devices are equal).
 
 ## ANOVA
 
 ### Assumptions
 The assumption of:
 
-- **Normality of data** has been met- both download and upload speed values are normally distributed.
-- **Homoscedasticity** has **not** been met- download and upload speed values have unequal variances between types of device. 
+- **Normality of data** has been met for upload speed but not for download speed- i.e. only upload speed values are normally distributed.
+- **Homoscedasticity** has been met for upload speed but not for download speed- download speed values have unequal variances between types of device. 
 - **Independence of samples** has been met.  
 
-Our data is heteroscedastic, and therefore one of the assumptions of ANOVA has been violated, however at this point I don't have the determination to research bootstrapping methods to corect for this, so i will just proceed with the ANOVA.
+Download speed values violate two of the assumptions of ANOVA, however at this point I don't have the determination to research bootstrapping methods to corect for this, so i will just proceed with the ANOVA.
 
 ### Analysis of variance (ANOVA)
 
@@ -198,7 +205,7 @@ print((summary(post_test_u, test = univariate())))
 
 According to the resulrs of Turkey test:
 
-- There is a significant difference in **download** speed between `phone and personal laptop` and between `phone and work laptop`. However, the comparison between `personal laptop and work laptop` is not significant.
+- There is a significant difference in **download** speed between `personal laptop and phone` and between `personal laptop and work laptop`. However, the comparison between `phone and work laptop` is not significant.
 
-- Similarily, there is a significant difference in **upload** speed between `phone and personal laptop` and between `phone and work laptop`. However, the comparison between `personal laptop and work laptop` is not significant.
+- Similarily, there is a significant difference in **upload** speed between `personal laptop and phone` and between `personal laptop and work laptop`. However, the comparison between `phone and work laptop` is not significant.
 

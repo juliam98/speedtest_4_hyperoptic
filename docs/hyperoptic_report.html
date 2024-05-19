@@ -137,6 +137,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Most recent suggestion was that I try doing the speedtest on different devices. Perhaps the experts at hyperoptic are baffled their suggestions of trying a different cable or resetting the router are not working. The trouble must be with my device! So this is what I did.</p>
 <p>However, I wondered, how will they know if the difference in speed between different devices is significant? Worry not, Hyperoptic, I was trained in statistics, and my passion for <code>R</code> can help us both.</p>
 <p>You are welcome.</p>
+<section id="about-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-data">About the data</h2>
+<p>The data used for this report were collected between 17/05/2024 19:00 and 18/05/2024 01:00. All deviced were connected to the 5 Ghz band. I have not tested the speed on the 2.4 Ghz band.</p>
+<p>The variable <code>device</code> in the dataset refers to one of three devices available to me at the time of testing: personal laptop, phone, and work laptop. I was not able to conduct the speedtest on my TV because despite being connected to wifi it shows the ‘no internet’ error message.</p>
+</section>
 <section id="create-a-summary-of-data" class="level2">
 <h2 class="anchored" data-anchor-id="create-a-summary-of-data">Create a summary of data</h2>
 <div class="cell">
@@ -155,29 +160,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <thead>
 <tr class="header">
 <th></th>
-<th>download</th>
-<th>upload</th>
+<th>download (± SD) Mbps</th>
+<th>upload (± SD) Mbps</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>personal laptop</td>
-<td>323 Mbps ±60.1</td>
-<td>148 Mbps ± 48</td>
+<td>275 (±91.6)</td>
+<td>114 (± 60)</td>
 </tr>
 <tr class="even">
 <td>phone</td>
-<td>16 Mbps ±8.1</td>
-<td>23 Mbps ± 8</td>
+<td>196 (±34.4)</td>
+<td>169 (± 45)</td>
 </tr>
 <tr class="odd">
 <td>work laptop</td>
-<td>323 Mbps ±48.4</td>
-<td>146 Mbps ±58</td>
+<td>275 (±102)</td>
+<td>157 (±49)</td>
 </tr>
 </tbody>
 </table>
-<p>Averages are calculated for 10 measurements per device. Standar deviation values are denoted by ±.</p>
+<p>Averages are calculated for 10 measurements per device. Standard deviation values are denoted by ±.</p>
 </section>
 <section id="visualise-data" class="level2">
 <h2 class="anchored" data-anchor-id="visualise-data">Visualise data</h2>
@@ -216,10 +221,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     Shapiro-Wilk normality test
 
 data:  res_download$residuals
-W = 0.94947, p-value = 0.1636</code></pre>
+W = 0.94892, p-value = 0.0003296</code></pre>
 </div>
 </div>
-<p>The p-value of Shapiro test is 0.164, meaning the data is normally distributed.</p>
+<p>The p-value of Shapiro test is 3.3^{-4}, meaning the data is <strong>not</strong> normally distributed.</p>
 </section>
 <section id="upload-speed" class="level3">
 <h3 class="anchored" data-anchor-id="upload-speed">Upload speed:</h3>
@@ -233,10 +238,10 @@ W = 0.94947, p-value = 0.1636</code></pre>
     Shapiro-Wilk normality test
 
 data:  res_upload$residuals
-W = 0.95231, p-value = 0.1949</code></pre>
+W = 0.98927, p-value = 0.53</code></pre>
 </div>
 </div>
-<p>The p-value of Shapiro test is 0.195, meaning the data is normally distributed.</p>
+<p>The p-value of Shapiro test is 0.53004, meaning the data is normally distributed.</p>
 </section>
 </section>
 <section id="check-homoscedascidity-of-data" class="level2">
@@ -251,14 +256,14 @@ W = 0.95231, p-value = 0.1949</code></pre>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(homoscedasticity_d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Levene's Test for Homogeneity of Variance (center = median)
-      Df F value    Pr(&gt;F)    
-group  2  10.521 0.0004184 ***
-      27                      
+       Df F value    Pr(&gt;F)    
+group   2  14.603 2.437e-06 ***
+      108                      
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p>Levene’s test is significant, meaning variances of download speed data across different devices are not equal.</p>
+<p>Levene’s test is significant, meaning variances of download speed data across different devices are <strong>not equal</strong>.</p>
 </section>
 <section id="upload-speed-1" class="level3">
 <h3 class="anchored" data-anchor-id="upload-speed-1">Upload speed:</h3>
@@ -269,14 +274,12 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(homoscedasticity_u)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Levene's Test for Homogeneity of Variance (center = median)
-      Df F value    Pr(&gt;F)    
-group  2  13.011 0.0001105 ***
-      27                      
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+       Df F value Pr(&gt;F)
+group   2  1.2098 0.3023
+      108               </code></pre>
 </div>
 </div>
-<p>Levene’s test is significant, meaning our data is heteroscedastic (i.e.&nbsp;variances of upload speed data across different devices are not equal).</p>
+<p>Levene’s test is non significant, meaning our data is homoscedastic (i.e.&nbsp;variances of upload speed data across different devices are equal).</p>
 </section>
 </section>
 <section id="anova" class="level2">
@@ -285,11 +288,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h3 class="anchored" data-anchor-id="assumptions">Assumptions</h3>
 <p>The assumption of:</p>
 <ul>
-<li><strong>Normality of data</strong> has been met- both download and upload speed values are normally distributed.</li>
-<li><strong>Homoscedasticity</strong> has <strong>not</strong> been met- download and upload speed values have unequal variances between types of device.</li>
+<li><strong>Normality of data</strong> has been met for upload speed but not for download speed- i.e.&nbsp;only upload speed values are normally distributed.</li>
+<li><strong>Homoscedasticity</strong> has been met for upload speed but not for download speed- download speed values have unequal variances between types of device.</li>
 <li><strong>Independence of samples</strong> has been met.</li>
 </ul>
-<p>Our data is heteroscedastic, and therefore one of the assumptions of ANOVA has been violated, however at this point I don’t have the determination to research bootstrapping methods to corect for this, so i will just proceed with the ANOVA.</p>
+<p>Download speed values violate two of the assumptions of ANOVA, however at this point I don’t have the determination to research bootstrapping methods to corect for this, so i will just proceed with the ANOVA.</p>
 </section>
 <section id="analysis-of-variance-anova" class="level3">
 <h3 class="anchored" data-anchor-id="analysis-of-variance-anova">Analysis of variance (ANOVA)</h3>
@@ -304,7 +307,7 @@ Returning eta squared.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>The ANOVA (formula: Download ~ device) suggests that:
 
-  - The main effect of device is statistically significant and large (F(2, 27) = 148.35, p &lt; .001; Eta2 = 0.92, 90% CI [0.86, 0.94])
+  - The main effect of device is statistically significant and large (F(2, 108) = 9.00, p &lt; .001; Eta2 = 0.14, 90% CI [0.05, 0.24])
 
 Effect sizes were labelled following Field's (2013) recommendations.</code></pre>
 </div>
@@ -321,7 +324,7 @@ Returning eta squared.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>The ANOVA (formula: Upload ~ device) suggests that:
 
-  - The main effect of device is statistically significant and large (F(2, 27) = 26.85, p &lt; .001; Eta2 = 0.67, 90% CI [0.47, 0.77])
+  - The main effect of device is statistically significant and large (F(2, 108) = 10.53, p &lt; .001; Eta2 = 0.16, 90% CI [0.06, 0.26])
 
 Effect sizes were labelled following Field's (2013) recommendations.</code></pre>
 </div>
@@ -354,9 +357,9 @@ Fit: aov(formula = Upload ~ device, data = data)
 
 Linear Hypotheses:
                                    Estimate Std. Error t value Pr(&gt;|t|)    
-phone - personal laptop == 0       -125.043     19.542  -6.399 7.45e-07 ***
-work laptop - personal laptop == 0   -2.093     19.542  -0.107    0.915    
-work laptop - phone == 0            122.950     19.542   6.292 9.85e-07 ***
+phone - personal laptop == 0          55.51      12.50   4.441 2.18e-05 ***
+work laptop - personal laptop == 0    42.56      12.17   3.496 0.000687 ***
+work laptop - phone == 0             -12.95      11.40  -1.136 0.258391    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Univariate p values reported)</code></pre>
@@ -382,9 +385,9 @@ Fit: aov(formula = Upload ~ device, data = data)
 
 Linear Hypotheses:
                                    Estimate Std. Error t value Pr(&gt;|t|)    
-phone - personal laptop == 0       -125.043     19.542  -6.399 7.45e-07 ***
-work laptop - personal laptop == 0   -2.093     19.542  -0.107    0.915    
-work laptop - phone == 0            122.950     19.542   6.292 9.85e-07 ***
+phone - personal laptop == 0          55.51      12.50   4.441 2.18e-05 ***
+work laptop - personal laptop == 0    42.56      12.17   3.496 0.000687 ***
+work laptop - phone == 0             -12.95      11.40  -1.136 0.258391    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Univariate p values reported)</code></pre>
@@ -397,8 +400,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 <h2 class="anchored" data-anchor-id="interpretation-of-results">Interpretation of results</h2>
 <p>According to the resulrs of Turkey test:</p>
 <ul>
-<li><p>There is a significant difference in <strong>download</strong> speed between <code>phone and personal laptop</code> and between <code>phone and work laptop</code>. However, the comparison between <code>personal laptop and work laptop</code> is not significant.</p></li>
-<li><p>Similarily, there is a significant difference in <strong>upload</strong> speed between <code>phone and personal laptop</code> and between <code>phone and work laptop</code>. However, the comparison between <code>personal laptop and work laptop</code> is not significant.</p></li>
+<li><p>There is a significant difference in <strong>download</strong> speed between <code>personal laptop and phone</code> and between <code>personal laptop and work laptop</code>. However, the comparison between <code>phone and work laptop</code> is not significant.</p></li>
+<li><p>Similarily, there is a significant difference in <strong>upload</strong> speed between <code>personal laptop and phone</code> and between <code>personal laptop and work laptop</code>. However, the comparison between <code>phone and work laptop</code> is not significant.</p></li>
 </ul>
 
 
