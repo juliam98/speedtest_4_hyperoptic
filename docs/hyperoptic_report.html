@@ -172,8 +172,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 <tr class="even">
 <td>phone</td>
-<td>196 (±34.4)</td>
-<td>169 (± 45)</td>
+<td>204 (±40.4)</td>
+<td>172 (± 45)</td>
 </tr>
 <tr class="odd">
 <td>work laptop</td>
@@ -208,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="test-the-normality-of-data" class="level2">
 <h2 class="anchored" data-anchor-id="test-the-normality-of-data">Test the normality of data</h2>
-<p>Conduct Shapiro test to check normality of data. Non-significant p-values (lower than 0.05) indicate the data is normally distributed.</p>
+<p>Next I conducted Shapiro test to check normality of data. Non-significant p-values (greater or equal than 0.05) indicate the data is normally distributed.</p>
 <section id="download-speed" class="level3">
 <h3 class="anchored" data-anchor-id="download-speed">Download speed:</h3>
 <div class="cell">
@@ -221,10 +221,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     Shapiro-Wilk normality test
 
 data:  res_download$residuals
-W = 0.94892, p-value = 0.0003296</code></pre>
+W = 0.95476, p-value = 0.0006292</code></pre>
 </div>
 </div>
-<p>The p-value of Shapiro test is 3.3^{-4}, meaning the data is <strong>not</strong> normally distributed.</p>
+<p>The p-value of Shapiro test is 6.3^{-4}, meaning the data is <strong>not</strong> normally distributed.</p>
 </section>
 <section id="upload-speed" class="level3">
 <h3 class="anchored" data-anchor-id="upload-speed">Upload speed:</h3>
@@ -238,10 +238,10 @@ W = 0.94892, p-value = 0.0003296</code></pre>
     Shapiro-Wilk normality test
 
 data:  res_upload$residuals
-W = 0.98927, p-value = 0.53</code></pre>
+W = 0.98951, p-value = 0.5175</code></pre>
 </div>
 </div>
-<p>The p-value of Shapiro test is 0.53004, meaning the data is normally distributed.</p>
+<p>The p-value of Shapiro test is 0.51746, meaning the data is normally distributed.</p>
 </section>
 </section>
 <section id="check-homoscedascidity-of-data" class="level2">
@@ -257,8 +257,8 @@ W = 0.98927, p-value = 0.53</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Levene's Test for Homogeneity of Variance (center = median)
        Df F value    Pr(&gt;F)    
-group   2  14.603 2.437e-06 ***
-      108                      
+group   2  13.133 7.445e-06 ***
+      113                      
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -275,8 +275,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Levene's Test for Homogeneity of Variance (center = median)
        Df F value Pr(&gt;F)
-group   2  1.2098 0.3023
-      108               </code></pre>
+group   2  1.3719 0.2578
+      113               </code></pre>
 </div>
 </div>
 <p>Levene’s test is non significant, meaning our data is homoscedastic (i.e.&nbsp;variances of upload speed data across different devices are equal).</p>
@@ -307,7 +307,7 @@ Returning eta squared.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>The ANOVA (formula: Download ~ device) suggests that:
 
-  - The main effect of device is statistically significant and large (F(2, 108) = 9.00, p &lt; .001; Eta2 = 0.14, 90% CI [0.05, 0.24])
+  - The main effect of device is statistically significant and medium (F(2, 113) = 8.31, p &lt; .001; Eta2 = 0.13, 90% CI [0.04, 0.22])
 
 Effect sizes were labelled following Field's (2013) recommendations.</code></pre>
 </div>
@@ -324,7 +324,7 @@ Returning eta squared.</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>The ANOVA (formula: Upload ~ device) suggests that:
 
-  - The main effect of device is statistically significant and large (F(2, 108) = 10.53, p &lt; .001; Eta2 = 0.16, 90% CI [0.06, 0.26])
+  - The main effect of device is statistically significant and large (F(2, 113) = 12.05, p &lt; .001; Eta2 = 0.18, 90% CI [0.08, 0.27])
 
 Effect sizes were labelled following Field's (2013) recommendations.</code></pre>
 </div>
@@ -357,9 +357,9 @@ Fit: aov(formula = Upload ~ device, data = data)
 
 Linear Hypotheses:
                                    Estimate Std. Error t value Pr(&gt;|t|)    
-phone - personal laptop == 0          55.51      12.50   4.441 2.18e-05 ***
-work laptop - personal laptop == 0    42.56      12.17   3.496 0.000687 ***
-work laptop - phone == 0             -12.95      11.40  -1.136 0.258391    
+phone - personal laptop == 0          58.32      12.06   4.837 4.21e-06 ***
+work laptop - personal laptop == 0    42.56      12.06   3.530 0.000603 ***
+work laptop - phone == 0             -15.76      10.93  -1.441 0.152237    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Univariate p values reported)</code></pre>
@@ -385,9 +385,9 @@ Fit: aov(formula = Upload ~ device, data = data)
 
 Linear Hypotheses:
                                    Estimate Std. Error t value Pr(&gt;|t|)    
-phone - personal laptop == 0          55.51      12.50   4.441 2.18e-05 ***
-work laptop - personal laptop == 0    42.56      12.17   3.496 0.000687 ***
-work laptop - phone == 0             -12.95      11.40  -1.136 0.258391    
+phone - personal laptop == 0          58.32      12.06   4.837 4.21e-06 ***
+work laptop - personal laptop == 0    42.56      12.06   3.530 0.000603 ***
+work laptop - phone == 0             -15.76      10.93  -1.441 0.152237    
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 (Univariate p values reported)</code></pre>

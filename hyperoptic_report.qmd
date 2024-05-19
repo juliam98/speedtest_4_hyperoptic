@@ -88,7 +88,7 @@ ggplot(data = data_melted) +
 ```
 
 ## Test the normality of data
-Conduct Shapiro test to check normality of data. Non-significant p-values (lower than 0.05) indicate the data is normally distributed.
+Next I conducted Shapiro test to check normality of data. Non-significant p-values (greater or equal than 0.05) indicate the data is normally distributed.
 
 ### Download speed:
 
