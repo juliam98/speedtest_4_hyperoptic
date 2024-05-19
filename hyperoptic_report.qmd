@@ -209,3 +209,14 @@ According to the resulrs of Turkey test:
 
 - Similarily, there is a significant difference in **upload** speed between `personal laptop and phone` and between `personal laptop and work laptop`. However, the comparison between `phone and work laptop` is not significant.
 
+Therefore it seems like the type of device does have an effect on upload and download internet speed. 
+
+None of the measurements however come close to the 1 Gbps that my Hyperoptic package was supposed to provide, therefore in non-statistical terms I would conclude that:
+
+<p align="center">
+  <img src="result.jpg" width="350"/>
+</p>
+
+Best wishes,
+
+Julia
